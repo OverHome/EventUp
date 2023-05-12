@@ -6,5 +6,6 @@ public interface IStationService
 {
     Task<List<Station>> GetAllStations();
     Task<Station> GetStationById(int id);
-    Task<List<Station>> AddStations(Station newStation);
+    Task<Station> AddStations(Station newStation);
+    Task DeleteStationsById(int id);
 }

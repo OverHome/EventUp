@@ -19,12 +19,14 @@ namespace EventUp.Api.Controllers
     {
         private readonly IEventService _eventService;
         private readonly IStationService _stationService;
+        private readonly IEventTypeService _eventTypeService;
         private readonly IMapper _mapper;
 
-        public EventsController(IEventService eventService, IStationService stationService, IMapper mapper)
+        public EventsController(IEventService eventService, IStationService stationService, IEventTypeService eventTypeService, IMapper mapper)
         {
             _eventService = eventService;
             _stationService = stationService;
+            _eventTypeService = eventTypeService;
             _mapper = mapper;
         }
 
@@ -46,9 +48,10 @@ namespace EventUp.Api.Controllers
             return Ok(await _eventService.AddEvent(_mapper.Map<Event>(newEvent)));
         }
         [HttpDelete]
-        public async Task<ActionResult<List<Event>>> DeleteEventById([FromQuery]int id)
+        public async Task<ActionResult> DeleteEventById([FromQuery]int id)
         {
-            return Ok(await _eventService.DeleteEventById(id));
+            await _eventService.DeleteEventById(id);
+            return Ok();
         }
         
         [HttpGet("GetAllStation")]
@@ -62,5 +65,12 @@ namespace EventUp.Api.Controllers
         {
             return Ok(await _stationService.AddStations(_mapper.Map<Station>(newStation)));
         }
+        
+        [HttpGet("GetAllEventType")]
+        public async Task<ActionResult<List<EventType>>> GetAllEventType()
+        {
+            return Ok(await _eventTypeService.GetAllEventType());
+        }
+        
     }
 }

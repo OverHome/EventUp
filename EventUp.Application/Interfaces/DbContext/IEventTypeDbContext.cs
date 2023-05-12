@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventUp.Application.Interfaces;
 
-public interface IEventsDbContext
+public interface IEventTypeDbContext
 {
-    DbSet<Event> Events { get; }
+    DbSet<EventType> EventTypes { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

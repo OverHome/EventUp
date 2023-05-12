@@ -7,6 +7,6 @@ public interface IEventService
 {
     Task<List<Event>> GetAllEvents();
     Task<Event> GetEventsById(int id);
-    Task<List<Event>> AddEvent(Event newEvent);
-    Task<List<Event>> DeleteEventById(int id);
+    Task<Event> AddEvent(Event newEvent);
+    Task DeleteEventById(int id);
 }

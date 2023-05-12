@@ -24,10 +24,16 @@ public class StationService : IStationService
         return (await _stationDbContext.Stations.FirstOrDefaultAsync(s => s.Id == id))!;
     }
 
-    public async Task<List<Station>> AddStations(Station newStation)
+    public async Task<Station> AddStations(Station newStation)
     {
-        await _stationDbContext.Stations.AddAsync(newStation);
+        var obj = await _stationDbContext.Stations.AddAsync(newStation);
         await _stationDbContext.SaveChangesAsync(default);
-        return await _stationDbContext.Stations.ToListAsync(); 
+        return obj.Entity; 
+    }
+
+    public async Task DeleteStationsById(int id)
+    {
+        _stationDbContext.Stations.Remove((await _stationDbContext.Stations.FirstAsync(s => s.Id == id))!);
+        await _stationDbContext.SaveChangesAsync(default);
     }
 }
