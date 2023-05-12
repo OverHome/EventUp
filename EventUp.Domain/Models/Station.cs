@@ -9,6 +9,7 @@ public class Station
     public string PlaceAddress { get; set; } = string.Empty;
     public double GeoLong { get; set; }
     public double GeoLat { get; set; }
-    [JsonIgnore]
-    public List<Event>? Events { get; set; }
+    
+    [JsonIgnore] 
+    public List<Event> Events { get; set; } = new List<Event>();
 }

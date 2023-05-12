@@ -12,8 +12,9 @@ public static class DependencyInjection
     {
         var connectionString = configuration["DbConnection"];
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
-        services.AddScoped<IEventsDbContext>(provider => provider.GetService<AppDbContext>());
+        services.AddScoped<IEventDbContext>(provider => provider.GetService<AppDbContext>());
         services.AddScoped<IStationDbContext>(provider => provider.GetService<AppDbContext>());
+        services.AddScoped<IEventTypeDbContext>(provider => provider.GetService<AppDbContext>());
         return services;
     }
 }

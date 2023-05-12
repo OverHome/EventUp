@@ -19,8 +19,4 @@
       <ProjectReference Include="..\EventUp.Application\EventUp.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Configure\" />
-    </ItemGroup>
-
 </Project>
