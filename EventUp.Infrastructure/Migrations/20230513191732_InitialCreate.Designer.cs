@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventUp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230512173251_InitialCreate")]
+    [Migration("20230513191732_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -125,6 +125,54 @@ namespace EventUp.Infrastructure.Migrations
                     b.ToTable("Stations");
                 });
 
+            modelBuilder.Entity("EventUp.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("UserRoles")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Admin",
+                            PasswordHash = "65e84be33532fb784c48129675f9eff3a682b27168c0ea744b2cf58ee02337c5",
+                            UserRoles = 1
+                        });
+                });
+
+            modelBuilder.Entity("EventUser", b =>
+                {
+                    b.Property<int>("FavoriteEventsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("InFavoriteUsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("FavoriteEventsId", "InFavoriteUsersId");
+
+                    b.HasIndex("InFavoriteUsersId");
+
+                    b.ToTable("EventUser");
+                });
+
             modelBuilder.Entity("EventEventType", b =>
                 {
                     b.HasOne("EventUp.Domain.Models.EventType", null)
@@ -149,6 +197,21 @@ namespace EventUp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Station");
+                });
+
+            modelBuilder.Entity("EventUser", b =>
+                {
+                    b.HasOne("EventUp.Domain.Models.Event", null)
+                        .WithMany()
+                        .HasForeignKey("FavoriteEventsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventUp.Domain.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("InFavoriteUsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EventUp.Domain.Models.Station", b =>

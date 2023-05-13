@@ -5,6 +5,7 @@ using EventUp.Domain.Models;
 using EventUp.Infrastructure.Dto.Event;
 using EventUp.Infrastructure.Dto.EventType;
 using EventUp.Infrastructure.Dto.Station;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
@@ -12,6 +13,7 @@ namespace EventUp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = nameof(UserRoles.Admin))]
     public class AdminPanelController : ControllerBase
     {
         private readonly IEventService _eventService;
@@ -87,6 +89,13 @@ namespace EventUp.Api.Controllers
         {
             await _eventTypeService.DeleteEventTypeById(id);
             return NoContent();
+        }
+        
+        [HttpDelete("a")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> A()
+        {
+            return Ok(User.Claims);
         }
         
     }

@@ -44,6 +44,21 @@ namespace EventUp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    UserRoles = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
@@ -51,10 +66,10 @@ namespace EventUp.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: false),
                     About = table.Column<string>(type: "text", nullable: false),
-                    StationId = table.Column<int>(type: "integer", nullable: false),
-                    EventTypeIds = table.Column<List<int>>(type: "integer[]", nullable: false),
                     StartDuring = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndDuring = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    EndDuring = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    StationId = table.Column<int>(type: "integer", nullable: false),
+                    EventTypeIds = table.Column<List<int>>(type: "integer[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,6 +106,35 @@ namespace EventUp.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EventUser",
+                columns: table => new
+                {
+                    FavoriteEventsId = table.Column<int>(type: "integer", nullable: false),
+                    InFavoriteUsersId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventUser", x => new { x.FavoriteEventsId, x.InFavoriteUsersId });
+                    table.ForeignKey(
+                        name: "FK_EventUser_Events_FavoriteEventsId",
+                        column: x => x.FavoriteEventsId,
+                        principalTable: "Events",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EventUser_Users_InFavoriteUsersId",
+                        column: x => x.InFavoriteUsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Name", "PasswordHash", "UserRoles" },
+                values: new object[] { 1, "Admin", "65e84be33532fb784c48129675f9eff3a682b27168c0ea744b2cf58ee02337c5", 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_EventEventType_EventsId",
                 table: "EventEventType",
@@ -100,6 +144,11 @@ namespace EventUp.Infrastructure.Migrations
                 name: "IX_Events_StationId",
                 table: "Events",
                 column: "StationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EventUser_InFavoriteUsersId",
+                table: "EventUser",
+                column: "InFavoriteUsersId");
         }
 
         /// <inheritdoc />
@@ -109,10 +158,16 @@ namespace EventUp.Infrastructure.Migrations
                 name: "EventEventType");
 
             migrationBuilder.DropTable(
+                name: "EventUser");
+
+            migrationBuilder.DropTable(
                 name: "EventTypes");
 
             migrationBuilder.DropTable(
                 name: "Events");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Stations");

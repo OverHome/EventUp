@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IEventDbContext>(provider => provider.GetService<AppDbContext>());
         services.AddScoped<IStationDbContext>(provider => provider.GetService<AppDbContext>());
         services.AddScoped<IEventTypeDbContext>(provider => provider.GetService<AppDbContext>());
+        services.AddScoped<IUserDbContext>(provider => provider.GetService<AppDbContext>());
         return services;
     }
 }

@@ -29,7 +29,10 @@ public class EventService : IEventService
 
     public async Task<Event> GetEventsById(int id)
     {
-        return (await _eventsDbContext.Events.FirstOrDefaultAsync(e => e.Id == id))!;
+        return await _eventsDbContext.Events
+            .Include(e => e.Station)
+            .Include(e => e.EventType)
+            .FirstAsync(e => e.Id == id);
     }
 
     public async Task<Event> AddEvent(Event newEvent)
@@ -49,7 +52,7 @@ public class EventService : IEventService
 
     public async Task DeleteEventById(int id)
     {
-        _eventsDbContext.Events.Remove((await _eventsDbContext.Events.FirstAsync(e => e.Id == id))!);
+        _eventsDbContext.Events.Remove(await _eventsDbContext.Events.FirstAsync(e => e.Id == id));
         await _eventsDbContext.SaveChangesAsync(default);
     }
 }
