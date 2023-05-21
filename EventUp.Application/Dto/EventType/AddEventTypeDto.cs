@@ -1,4 +1,4 @@
-﻿namespace EventUp.Infrastructure.Dto.EventType;
+﻿namespace EventUp.Application.Dto.EventType;
 
 public class AddEventTypeDto
 {

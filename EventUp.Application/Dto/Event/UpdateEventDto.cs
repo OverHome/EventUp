@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EventUp.Domain.Models;
+﻿namespace EventUp.Application.Dto.Event;
 
 public class UpdateEventDto
 {

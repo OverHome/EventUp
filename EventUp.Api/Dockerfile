@@ -1,20 +1,17 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /src
-COPY ["EventUp.Api/EventUp.Api.csproj", "EventUp.Api/"]
-RUN dotnet restore "EventUp.Api/EventUp.Api.csproj"
-COPY . .
-WORKDIR "/src/EventUp.Api"
-RUN dotnet build "EventUp.Api.csproj" -c Release -o /app/build
+COPY EventUp.Api/*.csproj ./EventUp.Api/
+COPY EventUp.Application/*.csproj ./EventUp.Application/
+COPY EventUp.Infrastructure/*.csproj ./EventUp.Infrastructure/
+COPY EventUp.Domain/*.csproj ./EventUp.Domain/
+RUN dotnet restore ./EventUp.Api/EventUp.Api.csproj
 
-FROM build AS publish
-RUN dotnet publish "EventUp.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+COPY . ./
+RUN dotnet publish -c Release -o out EventUp.Api/EventUp.Api.csproj
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/out ./
+
 ENTRYPOINT ["dotnet", "EventUp.Api.dll"]

@@ -1,5 +1,4 @@
 ﻿using EventUp.Domain.Models;
-using EventUp.Infrastructure.Dto;
 
 namespace EventUp.Application.Interfaces.Services;
 

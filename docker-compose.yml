@@ -1,0 +1,21 @@
+﻿services:
+  db:
+    image: postgres
+    restart: always 
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwaszx
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+      
+  eventup.api:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: EventUp.Api/Dockerfile
+    command: >
+      sh -c "dotnet ef database update --project EventUp.Infrastructure/ --startup-project EventUp.Api/ --verbose"
+    ports:
+      - 80:80

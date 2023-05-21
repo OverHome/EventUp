@@ -16,11 +16,18 @@ public class AppDbContext : DbContext, IEventDbContext, IStationDbContext, IEven
     public AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : base(options)
     {
         _configuration = configuration;
+        Database.Migrate();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Event>(entity =>entity.Property(e => e.EventTypeIds).HasConversion(
+            v => string.Join(',', v),
+            v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList())
+        );
+        
         modelBuilder.Entity<User>().HasData(new User()
         {
             Id = 1,

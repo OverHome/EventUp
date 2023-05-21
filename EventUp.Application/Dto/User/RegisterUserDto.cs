@@ -1,4 +1,4 @@
-﻿namespace EventUp.Infrastructure.Dto.User;
+﻿namespace EventUp.Application.Dto.User;
 
 public class RegisterUserDto
 {

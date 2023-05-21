@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using EventUp.Application.Dto.Event;
+using EventUp.Application.Dto.EventType;
+using EventUp.Application.Dto.Station;
+using EventUp.Application.Dto.User;
 using EventUp.Domain.Models;
-using EventUp.Infrastructure.Dto.Event;
-using EventUp.Infrastructure.Dto.EventType;
-using EventUp.Infrastructure.Dto.Station;
-using EventUp.Infrastructure.Dto.User;
 using EventUp.Infrastructure.Tools;
 
 namespace EventsUp;

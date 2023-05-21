@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -69,7 +68,7 @@ namespace EventUp.Infrastructure.Migrations
                     StartDuring = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EndDuring = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     StationId = table.Column<int>(type: "integer", nullable: false),
-                    EventTypeIds = table.Column<List<int>>(type: "integer[]", nullable: false)
+                    EventTypeIds = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,4 @@
-﻿namespace EventUp.Infrastructure.Dto.Station;
+﻿namespace EventUp.Application.Dto.Station;
 
 public class AddStationDto
 {

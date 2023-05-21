@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using EventUp.Application.Interfaces.Services;
 using EventUp.Domain.Models;
-using EventUp.Infrastructure.Dto.Event;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
