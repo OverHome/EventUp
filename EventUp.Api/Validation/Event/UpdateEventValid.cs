@@ -7,7 +7,7 @@ public class UpdateEventValid : AbstractValidator<UpdateEventDto>
 {
     public UpdateEventValid()
     {
-        RuleFor(e=> e.Title).NotEmpty().MaximumLength(50);
+        RuleFor(e=> e.Title).NotEmpty().MaximumLength(200);
         RuleFor(e=> e.About).NotEmpty().MaximumLength(1000);
         RuleFor(e => e.StartDuring).NotEmpty();
         RuleFor(e => e.EndDuring).NotEmpty();
