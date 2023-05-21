@@ -11,6 +11,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration["DbConnection"];
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
         services.AddScoped<IEventDbContext>(provider => provider.GetService<AppDbContext>());
         services.AddScoped<IStationDbContext>(provider => provider.GetService<AppDbContext>());

@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EventUp.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230513191732_InitialCreate")]
+    [Migration("20230521035605_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,14 +54,14 @@ namespace EventUp.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("EndDuring")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<List<int>>("EventTypeIds")
                         .IsRequired()
                         .HasColumnType("integer[]");
 
                     b.Property<DateTime>("StartDuring")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("StationId")
                         .HasColumnType("integer");

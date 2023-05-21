@@ -51,14 +51,14 @@ namespace EventUp.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("EndDuring")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<List<int>>("EventTypeIds")
                         .IsRequired()
                         .HasColumnType("integer[]");
 
                     b.Property<DateTime>("StartDuring")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("StationId")
                         .HasColumnType("integer");

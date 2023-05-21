@@ -66,8 +66,8 @@ namespace EventUp.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "text", nullable: false),
                     About = table.Column<string>(type: "text", nullable: false),
-                    StartDuring = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndDuring = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    StartDuring = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    EndDuring = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     StationId = table.Column<int>(type: "integer", nullable: false),
                     EventTypeIds = table.Column<List<int>>(type: "integer[]", nullable: false)
                 },

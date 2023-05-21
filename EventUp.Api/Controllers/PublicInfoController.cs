@@ -58,5 +58,11 @@ namespace EventUp.Api.Controllers
         {
             return Ok(await _eventTypeService.GetEventTypeById(id));
         }
+        
+        [HttpGet("Events/Filter")]
+        public async Task<ActionResult<Event>> GetEventByFilter([FromQuery]EventFilter filter)
+        {
+            return Ok(await _eventService.GetEventByFilter(filter));
+        }
     }
 }

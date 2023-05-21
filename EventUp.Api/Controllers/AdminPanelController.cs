@@ -47,6 +47,14 @@ namespace EventUp.Api.Controllers
             return responseOnCreate(endPoint, createdResource);
         }
 
+        [HttpPut("Event")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<ActionResult> UpdateEvent([FromBody] UpdateEventDto updateEvent)
+        {
+            var a = await _eventService.UpdateEvent(_mapper.Map<Event>(updateEvent));
+            return NoContent();
+        }
+
         [HttpDelete("Event")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteEvent([FromQuery] int id)
@@ -90,13 +98,5 @@ namespace EventUp.Api.Controllers
             await _eventTypeService.DeleteEventTypeById(id);
             return NoContent();
         }
-        
-        [HttpDelete("a")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult> A()
-        {
-            return Ok(User.Claims);
-        }
-        
     }
 }
