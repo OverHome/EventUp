@@ -23,6 +23,10 @@ namespace EventUp.Api.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Get All Favorite (Need Auth)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("FavoriteEvents")]
         public async Task<ActionResult<List<Event>>> GetUserFavoriteEvents()
         {
@@ -30,8 +34,14 @@ namespace EventUp.Api.Controllers
             var nameIdentifier = Convert.ToInt32(identity!.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             return Ok(await _userService.GetUserFavoriteEvents(nameIdentifier));
         }
+
+        /// <summary>
+        /// Add To Favorite (Need Auth)
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
         [HttpPost("FavoriteEvent")]
-        public async Task<ActionResult<Event>> AddUserFavoriteEvent([FromBody]int eventId)
+        public async Task<ActionResult<Event>> AddUserFavoriteEvent([FromBody] int eventId)
         {
             var identity = User.Identity as ClaimsIdentity;
             var nameIdentifier = Convert.ToInt32(identity!.FindFirst(ClaimTypes.NameIdentifier)?.Value);

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 using EventUp.Infrastructure;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.OpenApi.Models;
@@ -36,14 +37,17 @@ builder.Services.AddSwaggerGen(opt =>
             new string[]{}
         }
     });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.XML";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            
+    //... and tell Swagger to use those XML comments.
+    opt.IncludeXmlComments(xmlPath);
 });
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication(builder.Configuration);  
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddValidation();
 var app = builder.Build();
-
-
 
 app.UseSwagger();
 app.UseSwaggerUI();

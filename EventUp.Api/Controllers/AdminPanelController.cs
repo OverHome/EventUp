@@ -38,6 +38,11 @@ namespace EventUp.Api.Controllers
             return CreatedAtAction(endPoint, infoControllerName, new { id = id }, createdResource);
         }
 
+        /// <summary>
+        /// Add Event
+        /// </summary>
+        /// <param name="newEvent"></param>
+        /// <returns></returns>
         [HttpPost("Event")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Event>> AddEvent([FromBody] AddEventDto newEvent)
@@ -47,6 +52,11 @@ namespace EventUp.Api.Controllers
             return responseOnCreate(endPoint, createdResource);
         }
 
+        /// <summary>
+        /// Update Event
+        /// </summary>
+        /// <param name="updateEvent"></param>
+        /// <returns></returns>
         [HttpPut("Event")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> UpdateEvent([FromBody] UpdateEventDto updateEvent)
@@ -55,6 +65,11 @@ namespace EventUp.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete Event
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("Event")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteEvent([FromQuery] int id)
@@ -63,6 +78,11 @@ namespace EventUp.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Add Station
+        /// </summary>
+        /// <param name="newEvent"></param>
+        /// <returns></returns>
         [HttpPost("Station")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<Station>> AddStation([FromBody] AddStationDto newEvent)
@@ -72,6 +92,11 @@ namespace EventUp.Api.Controllers
             return responseOnCreate(endPoint, createdResource);
         }
 
+        /// <summary>
+        /// DeleteStation
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("Station")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -81,6 +106,11 @@ namespace EventUp.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Add EventType
+        /// </summary>
+        /// <param name="newEventType"></param>
+        /// <returns></returns>
         [HttpPost("EventType")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<EventType>> AddEventType([FromBody] AddEventTypeDto newEventType)
@@ -90,7 +120,11 @@ namespace EventUp.Api.Controllers
             return responseOnCreate(endPoint, createdResource);
         }
 
-
+        /// <summary>
+        /// Delete EventType
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("EventType")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult> DeleteEventType([FromQuery] int id)

@@ -30,6 +30,13 @@ namespace EventUp.Api.Controllers
             _jwtTokenService = jwtTokenService;
             _mapper = mapper;
         }
+
+        /// <summary>
+        /// Add User/Register
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost("register")]
         public async Task<ActionResult<JwtToken>> Register([FromBody] RegisterUserDto newUser)
         {
@@ -38,9 +45,16 @@ namespace EventUp.Api.Controllers
             {
                 throw new Exception("UserExist");
             }
+
             return Ok(await _userService.AddUser(_mapper.Map<User>(newUser)));
         }
-        
+
+        /// <summary>
+        /// Login/Get Jwt
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost("login")]
         public async Task<ActionResult<JwtToken>> Login([FromBody] LoginUserDto user)
         {
@@ -49,6 +63,7 @@ namespace EventUp.Api.Controllers
             {
                 throw new Exception("BadPassword");
             }
+
             return Ok(await _jwtTokenService.CreateJwtToken(userInBd));
         }
     }
