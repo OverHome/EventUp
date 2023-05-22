@@ -77,7 +77,7 @@ public class EventService : IEventService
             .Include(e => e.Station)
             .Include(e => e.EventType)
             .AsQueryable();
-        
+
         if (filter.Date != null)
         {
             allEvent = allEvent.Where(e => e.StartDuring.Date == filter.Date.Value.Date);
@@ -86,16 +86,19 @@ public class EventService : IEventService
         {
             allEvent = allEvent.Where(e => e.StationId == filter.StationId);
         }
-        if (filter.EventTypeId != null && filter.EventTypeId.Any())
-        {
-            allEvent = allEvent.Where(e => filter.EventTypeId.All(id => e.EventTypeIds.Contains(id)));
-        }
         if (filter.Search != null)
         {
            allEvent = allEvent.Where(e => e.Title.Contains(filter.Search) || e.About.Contains(filter.Search));
         }
 
-        return await allEvent.ToListAsync();
+        var eventTempFilteredList = await allEvent.ToListAsync();
+        
+        if (filter.EventTypeId != null && filter.EventTypeId.Any())
+        {
+            eventTempFilteredList = eventTempFilteredList.Where(e => filter.EventTypeId.All(id => e.EventTypeIds.Contains(id))).ToList();        
+        }
+
+        return eventTempFilteredList;
     }
 
     public async Task<List<Event>> GetActiveEvent()
