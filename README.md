@@ -46,6 +46,7 @@ http://localhost/swagger/index.html
 ```
 http://localhost/api/AdminPanel
 ```
+Логин и пароль дефолтной админской записи находится в файле appsettings.json
 
 ### Аунтификация
 Все EndPoint's для Аунтификации находтся по адрессу
